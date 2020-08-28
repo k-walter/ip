@@ -18,6 +18,10 @@ public class Duke {
             "     added: %s\n" +
             hr;
     private static String task = "     %d. %s";
+    private static String done = "    ____________________________________________________________\n" +
+            "     Nice! I've marked this task as done: \n" +
+            "       %s\n" +
+            "    ____________________________________________________________\n";
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -46,10 +50,17 @@ public class Duke {
                 System.out.println(hr);
                 break;
 
+            case "done":
+                int i = Integer.parseInt(cmd[1]);
+                tasks.get(i - 1).markAsDone();
+                System.out.println(String.format(done, tasks.get(i - 1).status()));
+                break;
+
             default:
                 Task t = new Task(line);
                 tasks.add(t);
                 System.out.println(String.format(add, line));
+                break;
             }
 
             line = scan.nextLine();
