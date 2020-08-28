@@ -1,30 +1,54 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    private static String greet = "    ____________________________________________________________\n" +
+    private static String hr = "    ____________________________________________________________\n";
+    private static String greet = hr +
             "     Hello! I'm Duke\n" +
             "     What can I do for you?\n" +
-            "    ____________________________________________________________\n";
-
-    private static String bye = "    ____________________________________________________________\n" +
+            hr;
+    private static String bye = hr +
             "     Bye. Hope to see you again soon!\n" +
-            "    ____________________________________________________________\n";
-
-    private static String echo = "    ____________________________________________________________\n" +
+            hr;
+    private static String echo = hr +
             "     %s\n" +
-            "    ____________________________________________________________\n";
+            hr;
+    private static String add = hr +
+            "     added: %s\n" +
+            hr;
+    private static String task = "     %d. %s";
 
     public static void main(String[] args) {
+        ArrayList<String> tasks = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         String line = "greet";
 
         do {
-            switch (line) {
+            String[] cmd = line.split(" ");
+            switch (cmd[0]) {
+
             case "greet":
                 System.out.println(greet);
                 break;
+
+            case "echo":
+                String[] statementArray = Arrays.copyOfRange(cmd, 1, cmd.length);
+                String statement = String.join(" ", statementArray);
+                System.out.println(String.format(echo, statement));
+                break;
+
+            case "list":
+                System.out.print(hr);
+                for (int i = 1; i <= tasks.size(); ++i) {
+                    System.out.println(String.format(task, i, tasks.get(i - 1)));
+                }
+                System.out.println(hr);
+                break;
+
             default:
-                System.out.println(String.format(echo, line));
+                tasks.add(line);
+                System.out.println(String.format(add, line));
             }
 
             line = scan.nextLine();
