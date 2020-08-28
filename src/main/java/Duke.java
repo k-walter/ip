@@ -20,7 +20,7 @@ public class Duke {
     private static String task = "     %d. %s";
 
     public static void main(String[] args) {
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         String line = "greet";
 
@@ -41,13 +41,14 @@ public class Duke {
             case "list":
                 System.out.print(hr);
                 for (int i = 1; i <= tasks.size(); ++i) {
-                    System.out.println(String.format(task, i, tasks.get(i - 1)));
+                    System.out.println(String.format(task, i, tasks.get(i - 1).status()));
                 }
                 System.out.println(hr);
                 break;
 
             default:
-                tasks.add(line);
+                Task t = new Task(line);
+                tasks.add(t);
                 System.out.println(String.format(add, line));
             }
 
