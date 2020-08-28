@@ -18,10 +18,10 @@ public class Duke {
             "     added: %s\n" +
             hr;
     private static String task = "     %d. %s";
-    private static String done = "    ____________________________________________________________\n" +
+    private static String done = hr +
             "     Nice! I've marked this task as done: \n" +
             "       %s\n" +
-            "    ____________________________________________________________\n";
+            hr;
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -29,6 +29,7 @@ public class Duke {
         String line = "greet";
 
         do {
+            // Take commands from first space-separated word
             String[] cmd = line.split(" ");
             switch (cmd[0]) {
 
@@ -45,7 +46,7 @@ public class Duke {
             case "list":
                 System.out.print(hr);
                 for (int i = 1; i <= tasks.size(); ++i) {
-                    System.out.println(String.format(task, i, tasks.get(i - 1).status()));
+                    System.out.println(String.format(task, i, tasks.get(i - 1).getStatus()));
                 }
                 System.out.println(hr);
                 break;
@@ -53,7 +54,7 @@ public class Duke {
             case "done":
                 int i = Integer.parseInt(cmd[1]);
                 tasks.get(i - 1).markAsDone();
-                System.out.println(String.format(done, tasks.get(i - 1).status()));
+                System.out.println(String.format(done, tasks.get(i - 1).getStatus()));
                 break;
 
             default:

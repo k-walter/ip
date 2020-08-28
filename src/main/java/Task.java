@@ -11,15 +11,24 @@ public class Task {
         this.isDone = isDone;
     }
 
+    /**
+     * getStatusIcon returns tick/cross icon corresponding to the task's completion status
+     */
     public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718");
+        return (this.isDone ? "\u2713" : "\u2718");
     }
 
+    /**
+     * markAsDone marks task instance as completed
+     */
     public void markAsDone() {
-        isDone = true;
+        this.isDone = true;
     }
 
-    public String status() {
-        return String.format("[%s] %s", getStatusIcon(), description);
+    /**
+     * getStatus returns formatted task status and description
+     */
+    public String getStatus() {
+        return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 }
