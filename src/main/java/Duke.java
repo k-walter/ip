@@ -19,16 +19,16 @@ public class Duke {
         String line = "greet";
 
         do {
-           switch (line) {
-               case "greet":
-                   System.out.println(greet);
-                   break;
-               default:
-                   System.out.println(String.format(echo, line));
-           }
+            switch (line) {
+            case "greet":
+                System.out.println(greet);
+                break;
+            default:
+                System.out.println(String.format(echo, line));
+            }
 
-           line = scan.nextLine();
-        } while (!line.equals("bye")) {
+            line = scan.nextLine();
+        } while (!line.equals("bye"));
 
         System.out.println(bye);
     }
