@@ -62,7 +62,31 @@ public class Duke {
                 System.out.println(String.format(done, tasks.get(i - 1)));
                 break;
             }
+
+            case "todo": {
+                String description = joinUntil(cmd, 1, cmd.length);
+                Todo t = new Todo(description);
+                addTask(t);
                 break;
+            }
+
+            case "deadline": {
+                int i = indexOfString(cmd, "/by");
+                String description = joinUntil(cmd, 1, i);
+                String by = joinUntil(cmd, i + 1, cmd.length);
+                Deadline d = new Deadline(description, by);
+                addTask(d);
+                break;
+            }
+
+            case "event": {
+                int i = indexOfString(cmd, "/at");
+                String description = joinUntil(cmd, 1, i);
+                String at = joinUntil(cmd, i + 1, cmd.length);
+                Event e = new Event(description, at);
+                addTask(e);
+                break;
+            }
 
             default: {
                 Task t = new Task(line);
@@ -87,6 +111,21 @@ public class Duke {
         System.out.println(String.format(add, task, tasks.size()));
     }
 
+    /**
+     * indexofString searches matching string within the array
+     *
+     * @param array - to search within
+     * @param match - to be searched
+     * @return index of matched string, or -1 if not found
+     */
+    public static int indexOfString(String[] array, String match) {
+        for (int i = 0; i < array.length; ++i) {
+            if (array[i].equals(match)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * joinUntil joins array of string into string
