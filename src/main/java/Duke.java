@@ -3,28 +3,31 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    private static String hr = "    ____________________________________________________________\n";
-    private static String greet = hr +
+    protected static final String hr = "    ____________________________________________________________\n";
+    protected static final String greet = hr +
             "     Hello! I'm Duke\n" +
             "     What can I do for you?\n" +
             hr;
-    private static String bye = hr +
+    protected static final String bye = hr +
             "     Bye. Hope to see you again soon!\n" +
             hr;
-    private static String echo = hr +
+    protected static final String echo = hr +
             "     %s\n" +
             hr;
-    private static String add = hr +
-            "     added: %s\n" +
+    protected static final String add = hr +
+            "     Got it. I've added this task: \n" +
+            "       %s\n" +
+            "     Now you have %d tasks in the list.\n" +
             hr;
-    private static String task = "     %d. %s";
-    private static String done = hr +
+    protected static final String task = "     %d. %s";
+    protected static final String done = hr +
             "     Nice! I've marked this task as done: \n" +
             "       %s\n" +
             hr;
 
+    protected static ArrayList<Task> tasks = new ArrayList<>(100);
+
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         String line = "greet";
 
@@ -33,40 +36,68 @@ public class Duke {
             String[] cmd = line.split(" ");
             switch (cmd[0]) {
 
-            case "greet":
+            case "greet": {
                 System.out.println(greet);
                 break;
+            }
 
-            case "echo":
-                String[] statementArray = Arrays.copyOfRange(cmd, 1, cmd.length);
-                String statement = String.join(" ", statementArray);
+            case "echo": {
+                String statement = joinUntil(cmd, 1, cmd.length);
                 System.out.println(String.format(echo, statement));
                 break;
+            }
 
-            case "list":
-                System.out.print(hr);
+            case "list": {
+                System.out.print(hr + "     Here are the tasks in your list:\n");
                 for (int i = 1; i <= tasks.size(); ++i) {
-                    System.out.println(String.format(task, i, tasks.get(i - 1).getStatus()));
+                    System.out.println(String.format(task, i, tasks.get(i - 1)));
                 }
                 System.out.println(hr);
                 break;
+            }
 
-            case "done":
+            case "done": {
                 int i = Integer.parseInt(cmd[1]);
                 tasks.get(i - 1).markAsDone();
-                System.out.println(String.format(done, tasks.get(i - 1).getStatus()));
+                System.out.println(String.format(done, tasks.get(i - 1)));
+                break;
+            }
                 break;
 
-            default:
+            default: {
                 Task t = new Task(line);
-                tasks.add(t);
-                System.out.println(String.format(add, line));
+                addTask(t);
                 break;
+            }
             }
 
             line = scan.nextLine();
         } while (!line.equals("bye"));
 
         System.out.println(bye);
+    }
+
+    /**
+     * addTask adds task to array and prints total number of tasks
+     *
+     * @param task - to be added
+     */
+    public static void addTask(Task task) {
+        tasks.add(task);
+        System.out.println(String.format(add, task, tasks.size()));
+    }
+
+
+    /**
+     * joinUntil joins array of string into string
+     *
+     * @param join - array of string to join
+     * @param from - start index to join from
+     * @param to   - end index to join up to
+     * @return joined string
+     */
+    public static String joinUntil(String[] join, int from, int to) {
+        String[] stringArray = Arrays.copyOfRange(join, from, to);
+        return String.join(" ", stringArray);
     }
 }

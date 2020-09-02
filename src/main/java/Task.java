@@ -12,7 +12,9 @@ public class Task {
     }
 
     /**
-     * getStatusIcon returns tick/cross icon corresponding to the task's completion status
+     * getStatusIcon pretty prints format
+     *
+     * @return status as tick/cross string
      */
     public String getStatusIcon() {
         return (this.isDone ? "\u2713" : "\u2718");
@@ -26,9 +28,12 @@ public class Task {
     }
 
     /**
-     * getStatus returns formatted task status and description
+     * toString overrides superclass string method
+     *
+     * @return task status and description
      */
-    public String getStatus() {
+    @Override
+    public String toString() {
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 }
