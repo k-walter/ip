@@ -3,27 +3,27 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    protected static final String hr = "    ____________________________________________________________\n";
-    protected static final String greet = hr +
+    protected static final String HR = "    ____________________________________________________________\n";
+    protected static final String GREET = HR +
             "     Hello! I'm Duke\n" +
             "     What can I do for you?\n" +
-            hr;
-    protected static final String bye = hr +
+            HR;
+    protected static final String BYE = HR +
             "     Bye. Hope to see you again soon!\n" +
-            hr;
-    protected static final String echo = hr +
+            HR;
+    protected static final String ECHO = HR +
             "     %s\n" +
-            hr;
-    protected static final String add = hr +
+            HR;
+    protected static final String ADD = HR +
             "     Got it. I've added this task: \n" +
             "       %s\n" +
             "     Now you have %d tasks in the list.\n" +
-            hr;
-    protected static final String task = "     %d. %s";
-    protected static final String done = hr +
+            HR;
+    protected static final String TASK = "     %d. %s";
+    protected static final String DONE = HR +
             "     Nice! I've marked this task as done: \n" +
             "       %s\n" +
-            hr;
+            HR;
 
     protected static ArrayList<Task> tasks = new ArrayList<>(100);
 
@@ -37,29 +37,29 @@ public class Duke {
             switch (cmd[0]) {
 
             case "greet": {
-                System.out.println(greet);
+                System.out.println(GREET);
                 break;
             }
 
             case "echo": {
                 String statement = joinUntil(cmd, 1, cmd.length);
-                System.out.println(String.format(echo, statement));
+                System.out.println(String.format(ECHO, statement));
                 break;
             }
 
             case "list": {
-                System.out.print(hr + "     Here are the tasks in your list:\n");
+                System.out.print(HR + "     Here are the tasks in your list:\n");
                 for (int i = 1; i <= tasks.size(); ++i) {
-                    System.out.println(String.format(task, i, tasks.get(i - 1)));
+                    System.out.println(String.format(TASK, i, tasks.get(i - 1)));
                 }
-                System.out.println(hr);
+                System.out.println(HR);
                 break;
             }
 
             case "done": {
                 int i = Integer.parseInt(cmd[1]);
                 tasks.get(i - 1).markAsDone();
-                System.out.println(String.format(done, tasks.get(i - 1)));
+                System.out.println(String.format(DONE, tasks.get(i - 1)));
                 break;
             }
 
@@ -98,7 +98,7 @@ public class Duke {
             line = scan.nextLine();
         } while (!line.equals("bye"));
 
-        System.out.println(bye);
+        System.out.println(BYE);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Duke {
      */
     public static void addTask(Task task) {
         tasks.add(task);
-        System.out.println(String.format(add, task, tasks.size()));
+        System.out.println(String.format(ADD, task, tasks.size()));
     }
 
     /**
