@@ -1,3 +1,5 @@
+package duke;
+
 public class UnknownArgumentException extends Exception {
     @Override
     public String toString() {
