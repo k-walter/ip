@@ -12,15 +12,18 @@ import java.util.Scanner;
 public class Duke {
     protected static final String HR = "    ____________________________________________________________\n";
     protected static final String GREET = "     Hello! I'm Duke\n" +
-            "     What can I do for you?\n";
-    protected static final String BYE = "     Bye. Hope to see you again soon!\n";
-    protected static final String ECHO = "     %s\n";
+            "     What can I do for you?";
+    protected static final String BYE = "     Bye. Hope to see you again soon!";
+    protected static final String ECHO = "     %s";
     protected static final String ADD = "     Got it. I've added this task: \n" +
             "       %s\n" +
-            "     Now you have %d tasks in the list.\n";
-    protected static final String TASK = "     %d. %s\n";
+            "     Now you have %d tasks in the list.";
+    protected static final String TASK = "     %d. %s";
     protected static final String DONE = "     Nice! I've marked this task as done: \n" +
-            "       %s\n";
+            "       %s";
+    protected static final String DELETE = "     Noted. I've removed this task: \n" +
+            "       %s\n" +
+            "     Now you have %d tasks in the list.";
 
     protected static ArrayList<Task> tasks = new ArrayList<>(100);
 
@@ -43,7 +46,7 @@ public class Duke {
             } catch (Exception e) {
                 stdOut = e.toString();
             } finally {
-                System.out.println(HR + stdOut + HR);
+                System.out.println(HR + stdOut + "\n" + HR);
             }
 
             stdIn = scan.nextLine();
@@ -82,6 +85,13 @@ public class Duke {
             int i = Integer.parseInt(cmd[1]);
             tasks.get(i - 1).markAsDone();
             return String.format(DONE, tasks.get(i - 1));
+        }
+
+        case "delete": {
+            int i = Integer.parseInt(cmd[1]) - 1;
+            Task t = tasks.get(i);
+            tasks.remove(i);
+            return String.format(DELETE, t, tasks.size());
         }
 
         case "todo": {
