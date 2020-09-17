@@ -97,30 +97,10 @@ public class Duke {
             return String.format(DONE, tasks.get(i - 1));
         }
 
-        case "todo": {
-            if (cmd.length <= 1) {
-                throw new EmptyArgumentException("todo");
-            }
-            String description = joinUntil(cmd, 1, cmd.length);
-            Todo t = new Todo(description);
-            return addTask(t);
-        }
-
-        case "deadline": {
-            int i = indexOfString(cmd, "/by");
-            String description = joinUntil(cmd, 1, i);
-            String by = joinUntil(cmd, i + 1, cmd.length);
-            Deadline d = new Deadline(description, by);
-            return addTask(d);
-        }
-
-        case "event": {
-            int i = indexOfString(cmd, "/at");
-            String description = joinUntil(cmd, 1, i);
-            String at = joinUntil(cmd, i + 1, cmd.length);
-            Event e = new Event(description, at);
-            return addTask(e);
-        }
+        case "todo":
+        case "deadline":
+        case "event":
+            return addTask(Task.parseCmd(cmd));
 
         default: {
             throw new UnknownArgumentException();
@@ -135,6 +115,7 @@ public class Duke {
      */
     public static String addTask(Task task) throws IOException {
         tasks.add(task);
+        TaskFile.writeFile(tasks);
         return String.format(ADD, task, tasks.size());
     }
 
