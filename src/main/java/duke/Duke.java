@@ -1,12 +1,13 @@
 package duke;
 
-import duke.task.Deadline;
-import duke.task.Event;
+import duke.error.EmptyArgumentException;
+import duke.error.UnknownArgumentException;
+import duke.io.TaskFile;
+import duke.io.Util;
 import duke.task.Task;
-import duke.task.Todo;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -25,9 +26,18 @@ public class Duke {
             "       %s\n" +
             "     Now you have %d tasks in the list.";
 
-    protected static ArrayList<Task> tasks = new ArrayList<>(100);
+    protected static ArrayList<Task> tasks;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // Read or instantiate file
+        try {
+            tasks = TaskFile.readFile();
+        } catch (Exception e) {
+            System.out.println(e);
+            TaskFile.initFile();
+            tasks = new ArrayList<>();
+        }
+
         Scanner scan = new Scanner(System.in);
         String stdIn = "greet";
         String stdOut = "";
@@ -43,6 +53,8 @@ public class Duke {
                 stdOut = e.toString();
             } catch (IndexOutOfBoundsException e) {
                 stdOut = e.toString();
+            } catch (IOException e) {
+                stdOut = e.toString();
             } catch (Exception e) {
                 stdOut = e.toString();
             } finally {
@@ -55,7 +67,7 @@ public class Duke {
         System.out.println(BYE);
     }
 
-    protected static String parseCmd(String line) throws EmptyArgumentException, UnknownArgumentException {
+    protected static String parseCmd(String line) throws EmptyArgumentException, UnknownArgumentException, IOException {
         // Take commands from first space-separated word
         String[] cmd = line.split(" ");
         if (cmd.length == 0) {
@@ -69,7 +81,7 @@ public class Duke {
         }
 
         case "echo": {
-            String statement = joinUntil(cmd, 1, cmd.length);
+            String statement = Util.joinUntil(cmd, 1, cmd.length);
             return String.format(ECHO, statement);
         }
 
@@ -84,6 +96,7 @@ public class Duke {
         case "done": {
             int i = Integer.parseInt(cmd[1]);
             tasks.get(i - 1).markAsDone();
+            TaskFile.writeFile(tasks);
             return String.format(DONE, tasks.get(i - 1));
         }
 
@@ -91,33 +104,14 @@ public class Duke {
             int i = Integer.parseInt(cmd[1]) - 1;
             Task t = tasks.get(i);
             tasks.remove(i);
+            TaskFile.writeFile(tasks);
             return String.format(DELETE, t, tasks.size());
         }
 
-        case "todo": {
-            if (cmd.length <= 1) {
-                throw new EmptyArgumentException("todo");
-            }
-            String description = joinUntil(cmd, 1, cmd.length);
-            Todo t = new Todo(description);
-            return addTask(t);
-        }
-
-        case "deadline": {
-            int i = indexOfString(cmd, "/by");
-            String description = joinUntil(cmd, 1, i);
-            String by = joinUntil(cmd, i + 1, cmd.length);
-            Deadline d = new Deadline(description, by);
-            return addTask(d);
-        }
-
-        case "event": {
-            int i = indexOfString(cmd, "/at");
-            String description = joinUntil(cmd, 1, i);
-            String at = joinUntil(cmd, i + 1, cmd.length);
-            Event e = new Event(description, at);
-            return addTask(e);
-        }
+        case "todo":
+        case "deadline":
+        case "event":
+            return addTask(Task.parseCmd(cmd));
 
         default: {
             throw new UnknownArgumentException();
@@ -130,37 +124,10 @@ public class Duke {
      *
      * @param task - to be added
      */
-    public static String addTask(Task task) {
+    public static String addTask(Task task) throws IOException {
         tasks.add(task);
+        TaskFile.writeFile(tasks);
         return String.format(ADD, task, tasks.size());
     }
 
-    /**
-     * indexofString searches matching string within the array
-     *
-     * @param array - to search within
-     * @param match - to be searched
-     * @return index of matched string, or -1 if not found
-     */
-    public static int indexOfString(String[] array, String match) {
-        for (int i = 0; i < array.length; ++i) {
-            if (array[i].equals(match)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * joinUntil joins array of string into string
-     *
-     * @param join - array of string to join
-     * @param from - start index to join from
-     * @param to   - end index to join up to
-     * @return joined string
-     */
-    public static String joinUntil(String[] join, int from, int to) {
-        String[] stringArray = Arrays.copyOfRange(join, from, to);
-        return String.join(" ", stringArray);
-    }
 }

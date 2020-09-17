@@ -1,4 +1,4 @@
-package duke;
+package duke.error;
 
 public class EmptyArgumentException extends Exception {
     String descriptor;
