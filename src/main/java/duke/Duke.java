@@ -1,12 +1,13 @@
 package duke;
 
-import duke.task.Deadline;
-import duke.task.Event;
+import duke.error.EmptyArgumentException;
+import duke.error.UnknownArgumentException;
+import duke.io.TaskFile;
+import duke.io.Util;
 import duke.task.Task;
-import duke.task.Todo;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -22,9 +23,18 @@ public class Duke {
     protected static final String DONE = "     Nice! I've marked this task as done: \n" +
             "       %s\n";
 
-    protected static ArrayList<Task> tasks = new ArrayList<>(100);
+    protected static ArrayList<Task> tasks;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // Read or instantiate file
+        try {
+            tasks = TaskFile.readFile();
+        } catch (Exception e) {
+            System.out.println(e);
+            TaskFile.initFile();
+            tasks = new ArrayList<>();
+        }
+
         Scanner scan = new Scanner(System.in);
         String stdIn = "greet";
         String stdOut = "";
@@ -40,6 +50,8 @@ public class Duke {
                 stdOut = e.toString();
             } catch (IndexOutOfBoundsException e) {
                 stdOut = e.toString();
+            } catch (IOException e) {
+                stdOut = e.toString();
             } catch (Exception e) {
                 stdOut = e.toString();
             } finally {
@@ -52,7 +64,7 @@ public class Duke {
         System.out.println(BYE);
     }
 
-    protected static String parseCmd(String line) throws EmptyArgumentException, UnknownArgumentException {
+    protected static String parseCmd(String line) throws EmptyArgumentException, UnknownArgumentException, IOException {
         // Take commands from first space-separated word
         String[] cmd = line.split(" ");
         if (cmd.length == 0) {
@@ -81,6 +93,7 @@ public class Duke {
         case "done": {
             int i = Integer.parseInt(cmd[1]);
             tasks.get(i - 1).markAsDone();
+            TaskFile.writeFile(tasks);
             return String.format(DONE, tasks.get(i - 1));
         }
 
@@ -120,7 +133,7 @@ public class Duke {
      *
      * @param task - to be added
      */
-    public static String addTask(Task task) {
+    public static String addTask(Task task) throws IOException {
         tasks.add(task);
         return String.format(ADD, task, tasks.size());
     }
