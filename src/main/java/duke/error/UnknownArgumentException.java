@@ -1,4 +1,4 @@
-package duke;
+package duke.error;
 
 public class UnknownArgumentException extends Exception {
     @Override
