@@ -13,18 +13,18 @@ import java.util.Scanner;
 public class Duke {
     protected static final String HR = "    ____________________________________________________________\n";
     protected static final String GREET = "     Hello! I'm Duke\n" +
-            "     What can I do for you?";
-    protected static final String BYE = "     Bye. Hope to see you again soon!";
-    protected static final String ECHO = "     %s";
+            "     What can I do for you?\n";
+    protected static final String BYE = "     Bye. Hope to see you again soon!\n";
+    protected static final String ECHO = "     %s\n";
     protected static final String ADD = "     Got it. I've added this task: \n" +
             "       %s\n" +
-            "     Now you have %d tasks in the list.";
-    protected static final String TASK = "     %d. %s";
+            "     Now you have %d tasks in the list.\n";
+    protected static final String TASK = "     %d. %s\n";
     protected static final String DONE = "     Nice! I've marked this task as done: \n" +
-            "       %s";
+            "       %s\n";
     protected static final String DELETE = "     Noted. I've removed this task: \n" +
             "       %s\n" +
-            "     Now you have %d tasks in the list.";
+            "     Now you have %d tasks in the list.\n";
 
     protected static ArrayList<Task> tasks;
 
@@ -58,7 +58,7 @@ public class Duke {
             } catch (Exception e) {
                 stdOut = e.toString();
             } finally {
-                System.out.println(HR + stdOut + "\n" + HR);
+                System.out.println(HR + stdOut + HR);
             }
 
             stdIn = scan.nextLine();
