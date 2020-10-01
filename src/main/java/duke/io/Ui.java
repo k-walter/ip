@@ -19,6 +19,8 @@ public class Ui {
     protected static final String DELETE = "     Noted. I've removed this task: \n" +
             "       %s\n" +
             "     Now you have %d tasks in the list.\n";
+    protected static final String LIST = "     Here are the tasks in your list:\n";
+    protected static final String FIND = "     Here are the matching tasks in your list:\n";
 
     public void showLine(boolean breakLine) {
         System.out.print(HR);
@@ -43,8 +45,17 @@ public class Ui {
         System.out.print(String.format(ECHO, message));
     }
 
+    public void showFind(ArrayList<Task> tasks) {
+        System.out.print(FIND);
+        this.showTasks(tasks);
+    }
+
     public void showList(ArrayList<Task> tasks) {
-        System.out.println("     Here are the tasks in your list:");
+        System.out.print(LIST);
+        this.showTasks(tasks);
+    }
+
+    protected void showTasks(ArrayList<Task> tasks) {
         for (int i = 1; i <= tasks.size(); ++i) {
             System.out.print(String.format(TASK, i, tasks.get(i - 1)));
         }
