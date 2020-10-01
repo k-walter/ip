@@ -1,8 +1,8 @@
 package duke.task;
 
+import duke.common.Util;
 import duke.error.EmptyArgumentException;
 import duke.error.UnknownArgumentException;
-import duke.io.Util;
 
 import java.util.Arrays;
 

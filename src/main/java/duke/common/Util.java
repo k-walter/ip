@@ -1,4 +1,4 @@
-package duke.io;
+package duke.common;
 
 import java.util.Arrays;
 

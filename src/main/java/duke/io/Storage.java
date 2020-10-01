@@ -10,10 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TaskFile {
-    protected static File f = new File("data/duke.txt");
+public class Storage {
+    protected static File f;
 
-    public static void initFile() throws IOException {
+    public Storage(String path) throws IOException {
+        f = new File(path);
         if (f.exists()) {
             return;
         }
