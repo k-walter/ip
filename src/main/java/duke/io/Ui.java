@@ -35,10 +35,6 @@ public class Ui {
         System.out.print(GREET);
     }
 
-    public void showError(String message) {
-        System.out.println(message);
-    }
-
     public void showBye() {
         System.out.print(BYE);
     }

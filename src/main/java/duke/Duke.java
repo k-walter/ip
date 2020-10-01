@@ -31,11 +31,11 @@ public class Duke {
 
         do {
             try {
-                Command c = Command.parse(stdIn);
                 ui.showLine();
+                Command c = Command.parse(stdIn);
                 c.execute(tasks, ui, storage);
             } catch (Exception e) {
-                ui.showError(e.toString());
+                ui.showEcho(e.toString());
             } finally {
                 ui.showLine(true);
             }

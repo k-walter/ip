@@ -4,6 +4,7 @@ import duke.common.Util;
 import duke.error.EmptyArgumentException;
 import duke.error.UnknownArgumentException;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public abstract class Task {
@@ -50,14 +51,16 @@ public abstract class Task {
             int i = Util.indexOfString(cmd, "/by");
             String description = Util.joinUntil(cmd, 1, i);
             String by = Util.joinUntil(cmd, i + 1, cmd.length);
-            return new Deadline(description, by);
+            LocalDate d = LocalDate.parse(by);
+            return new Deadline(description, d);
         }
 
         case "event": {
             int i = Util.indexOfString(cmd, "/at");
             String description = Util.joinUntil(cmd, 1, i);
             String at = Util.joinUntil(cmd, i + 1, cmd.length);
-            return new Event(description, at);
+            LocalDate d = LocalDate.parse(at);
+            return new Event(description, d);
         }
 
         default:
