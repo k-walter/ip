@@ -47,6 +47,11 @@ public abstract class Command implements Executable {
             return new DeleteCommand(i);
         }
 
+        case "find": {
+            String match = Util.joinUntil(cmd, 1, cmd.length);
+            return new FindCommand(match);
+        }
+
         case "todo":
         case "deadline":
         case "event":

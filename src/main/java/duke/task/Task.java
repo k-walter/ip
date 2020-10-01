@@ -68,6 +68,10 @@ public abstract class Task {
         }
     }
 
+    public boolean find(String match) {
+        return this.description.contains(match);
+    }
+
     /**
      * markAsDone marks task instance as completed
      */
