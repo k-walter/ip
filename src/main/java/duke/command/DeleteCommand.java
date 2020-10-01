@@ -14,6 +14,14 @@ public class DeleteCommand extends Command {
         this.i = i;
     }
 
+    /**
+     * Remove task from array with index and displays confirmation message
+     *
+     * @param tasks   to remove task from
+     * @param ui
+     * @param storage to store resultant tasks
+     * @throws IOException
+     */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws IOException {
         Task t = tasks.get(this.i);

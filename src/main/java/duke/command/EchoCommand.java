@@ -13,6 +13,13 @@ public class EchoCommand extends Command {
         this.message = message;
     }
 
+    /**
+     * Repeats command in Duke's formatted fashion
+     *
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) {
         ui.showEcho(this.message);

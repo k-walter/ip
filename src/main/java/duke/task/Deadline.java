@@ -25,6 +25,12 @@ public class Deadline extends Task {
         );
     }
 
+    /**
+     * overridees superclass string method
+     *
+     * @return completed and deadline in its input format
+     * eg false deadline assignment /by 2020-10-01
+     */
     @Override
     public String toInputString() {
         return String.format(
