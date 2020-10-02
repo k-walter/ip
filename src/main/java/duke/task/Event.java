@@ -25,6 +25,12 @@ public class Event extends Task {
         );
     }
 
+    /**
+     * overridees superclass string method
+     *
+     * @return completed and event in its input format
+     * eg false event lecture /at 2020-10-01
+     */
     @Override
     public String toInputString() {
         return String.format(
