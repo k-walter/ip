@@ -13,6 +13,12 @@ import java.util.Scanner;
 public class Storage {
     protected static File f;
 
+    /**
+     * Opens file or initialises file if not existing
+     *
+     * @param path
+     * @throws IOException
+     */
     public Storage(String path) throws IOException {
         f = new File(path);
         if (f.exists()) {
@@ -22,6 +28,12 @@ public class Storage {
         f.createNewFile();
     }
 
+    /**
+     * Writes array of tasks to file
+     *
+     * @param array of Task subclasses
+     * @throws IOException
+     */
     public static void writeFile(ArrayList<Task> array) throws IOException {
         FileWriter fw = new FileWriter(f, false);
         for (Task t : array) {
@@ -30,6 +42,14 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Reads array of tasks from file
+     *
+     * @return array of Task subclasses
+     * @throws IOException
+     * @throws EmptyArgumentException
+     * @throws UnknownArgumentException
+     */
     public static ArrayList<Task> readFile() throws IOException, EmptyArgumentException, UnknownArgumentException {
         Scanner s = new Scanner(f);
         ArrayList<Task> array = new ArrayList<>();

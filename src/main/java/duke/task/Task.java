@@ -20,6 +20,14 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    /**
+     * parses single command from stored data
+     *
+     * @param cmd space-separated string commands
+     * @return respective Task subclass
+     * @throws EmptyArgumentException
+     * @throws UnknownArgumentException
+     */
     public static Task parseCmd(String cmd) throws EmptyArgumentException, UnknownArgumentException {
         String[] input = cmd.split(" ");
         if (input.length < 2) {
@@ -35,6 +43,14 @@ public abstract class Task {
         return t;
     }
 
+    /**
+     * parses single command from CLI
+     *
+     * @param cmd space-separated string commands
+     * @return respective Task subclass
+     * @throws EmptyArgumentException
+     * @throws UnknownArgumentException
+     */
     public static Task parseCmd(String[] cmd) throws EmptyArgumentException, UnknownArgumentException {
         if (cmd.length <= 1) {
             String cmdType = cmd.length == 1 ? cmd[0] : "";
@@ -68,7 +84,13 @@ public abstract class Task {
         }
     }
 
-    public boolean find(String match) {
+    /**
+     * contains searches for match within description
+     *
+     * @param match to be found
+     * @return if description contains matching string
+     */
+    public boolean contains(String match) {
         return this.description.contains(match);
     }
 
@@ -98,6 +120,11 @@ public abstract class Task {
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
+    /**
+     * overridees superclass string method
+     *
+     * @return completed and task in its input format
+     */
     public String toInputString() {
         return Boolean.toString(this.isDone);
     }

@@ -15,6 +15,12 @@ public class Todo extends Task {
         return String.format("[T]%s", super.toString());
     }
 
+    /**
+     * overridees superclass string method
+     *
+     * @return completed and task in its input format
+     * eg false todo assignment
+     */
     @Override
     public String toInputString() {
         return String.format(

@@ -14,6 +14,14 @@ public class DoneCommand extends Command {
         this.i = i;
     }
 
+    /**
+     * Marks task as done with index and displays confirmation message
+     *
+     * @param tasks   to be marked as done
+     * @param ui
+     * @param storage to store resultant tasks
+     * @throws IOException
+     */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws IOException {
         tasks.get(this.i - 1).markAsDone();
